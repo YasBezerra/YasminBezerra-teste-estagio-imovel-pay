@@ -1,0 +1,96 @@
+.cobranca-list-container {
+  width: 90%;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+
+  .filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .filtro-input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      width: 180px;
+    }
+  }
+
+  .cobranca-list {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+
+    th, td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #555;
+    }
+
+    th {
+      background-color: #2c2b63;
+    }
+
+    td {
+      background-color: rgba(30, 29, 79, 0.6);
+    }
+
+    .acoes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .linha-status, .linha-acoes {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button {
+        /* Todos os botões com mesmo tamanho */
+        min-width: 90px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.1s;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Botões de status */
+      .status-pendente {
+        background-color: #f39c12;
+        color: #fff;
+
+        &.active {
+          background-color: #e67e22;
+        }
+      }
+
+      .status-pago {
+        background-color: #27ae60;
+        color: #fff;
+
+        &.active {
+          background-color: #2ecc71;
+        }
+      }
+
+      /* Botões de ações */
+      .edit-btn {
+        background-color: #2980b9;
+        color: #fff;
+      }
+
+      .delete-btn {
+        background-color: #c0392b;
+        color: #fff;
+      }
+    }
+  }
+}

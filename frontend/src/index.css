@@ -1,0 +1,126 @@
+@charset "UTF-8";
+/* src/index.scss - estilos globais atualizados */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(180deg, #363467 0%, rgba(30, 29, 79, 0.8) 100%); /* fundo gradient escuro */
+  color: #f0f0f0; /* texto claro para contraste */
+}
+
+.App {
+  min-height: 100vh; /* ocupa toda a tela */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Estilos de tabela */
+.cobranca-list {
+  width: 100%;
+  max-width: 900px; /* maior largura */
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.cobranca-list th,
+.cobranca-list td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cobranca-list th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cobranca-list td {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Botões de status */
+.status-button {
+  padding: 0.35rem 0.7rem;
+  margin: 0 0.25rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+/* Botão PENDENTE */
+.status-pendente {
+  background-color: #ffb74d; /* laranja claro para contraste */
+}
+
+/* Botão PAGO */
+.status-pago {
+  background-color: #4caf50; /* verde médio */
+}
+
+/* Destaque do botão ativo */
+.status-pendente.active {
+  border: 2px solid #ffa500;
+}
+
+.status-pago.active {
+  border: 2px solid #2e7d32;
+}
+
+/* Botão deletar */
+button.delete-btn {
+  background-color: #e53935; /* vermelho */
+  margin-left: 0.5rem;
+}
+
+button.delete-btn:hover {
+  background-color: #c62828;
+}
+
+/* Formulário */
+.cobranca-form {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 1rem;
+}
+
+.cobranca-form input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.cobranca-form button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #1e88e5; /* azul combinando com fundo */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cobranca-form button:hover {
+  background-color: #1565c0;
+}
+
+/* Header */
+.cobranca-header {
+  width: 100%;
+  max-width: 900px;
+  background-color: rgba(255, 255, 255, 0.1); /* leve transparência para combinar com fundo */
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f0f0f0;
+}/*# sourceMappingURL=index.css.map */

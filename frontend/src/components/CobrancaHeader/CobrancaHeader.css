@@ -1,0 +1,11 @@
+.cobranca-header {
+  width: 100%;
+  max-width: 900px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f0f0f0;
+}/*# sourceMappingURL=CobrancaHeader.css.map */

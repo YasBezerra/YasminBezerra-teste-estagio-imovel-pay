@@ -1,0 +1,81 @@
+@charset "UTF-8";
+.cobranca-list-container {
+  width: 90%;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+.cobranca-list-container .filtros {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.cobranca-list-container .filtros .filtro-input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  width: 180px;
+}
+.cobranca-list-container .cobranca-list {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.cobranca-list-container .cobranca-list th, .cobranca-list-container .cobranca-list td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #555;
+}
+.cobranca-list-container .cobranca-list th {
+  background-color: #2c2b63;
+}
+.cobranca-list-container .cobranca-list td {
+  background-color: rgba(30, 29, 79, 0.6);
+}
+.cobranca-list-container .cobranca-list .acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Botões de status */
+  /* Botões de ações */
+}
+.cobranca-list-container .cobranca-list .acoes .linha-status, .cobranca-list-container .cobranca-list .acoes .linha-acoes {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.cobranca-list-container .cobranca-list .acoes button {
+  /* Todos os botões com mesmo tamanho */
+  min-width: 90px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+}
+.cobranca-list-container .cobranca-list .acoes button:hover {
+  transform: scale(1.05);
+}
+.cobranca-list-container .cobranca-list .acoes .status-pendente {
+  background-color: #f39c12;
+  color: #fff;
+}
+.cobranca-list-container .cobranca-list .acoes .status-pendente.active {
+  background-color: #e67e22;
+}
+.cobranca-list-container .cobranca-list .acoes .status-pago {
+  background-color: #27ae60;
+  color: #fff;
+}
+.cobranca-list-container .cobranca-list .acoes .status-pago.active {
+  background-color: #2ecc71;
+}
+.cobranca-list-container .cobranca-list .acoes .edit-btn {
+  background-color: #2980b9;
+  color: #fff;
+}
+.cobranca-list-container .cobranca-list .acoes .delete-btn {
+  background-color: #c0392b;
+  color: #fff;
+}/*# sourceMappingURL=CobrancaList.css.map */

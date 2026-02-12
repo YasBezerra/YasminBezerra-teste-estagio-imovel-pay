@@ -1,0 +1,124 @@
+@charset "UTF-8";
+/* App.scss */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.cobranca-header,
+.cobranca-form,
+.cobranca-list-container {
+  width: 80%;
+  max-width: 1200px;
+}
+
+/* CobrancaHeader.scss */
+.cobranca-header {
+  width: 90%; /* largura fixa centralizada */
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* CobrancaList.scss */
+.cobranca-list-container {
+  width: 80%; /* mesma largura do header para centralizar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Filtros */
+.filtros {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.filtro-input {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  width: 48%;
+}
+
+/* Tabela */
+.cobranca-list {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.cobranca-list th, .cobranca-list td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Botões de status */
+.status-button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 5px;
+  color: #fff;
+  cursor: pointer;
+  min-width: 80px; /* garante mesmo tamanho */
+}
+
+.status-pendente {
+  background-color: #f39c12;
+}
+
+.status-pago {
+  background-color: #2ecc71;
+}
+
+.status-button.active {
+  box-shadow: 0 0 5px #000 inset;
+}
+
+/* Botões de ação (editar e deletar) */
+.edit-btn, .delete-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 5px; /* espaço abaixo dos status */
+  min-width: 80px; /* mesmo tamanho dos status */
+  color: #fff;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #3498db;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+}
+
+/* Organiza os botões em duas linhas */
+.acoes {
+  display: flex;
+  flex-direction: column; /* duas fileiras: status em cima, editar/deletar embaixo */
+  gap: 5px;
+}
+
+.acoes > .status-button {
+  margin-right: 5px; /* espaço entre pendente e pago */
+}
+
+.acoes > .edit-btn,
+.acoes > .delete-btn {
+  display: inline-block;
+  margin-right: 5px; /* espaço entre editar e deletar */
+}/*# sourceMappingURL=App.css.map */
