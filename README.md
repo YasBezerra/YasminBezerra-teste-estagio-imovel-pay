@@ -18,7 +18,7 @@ No geral, o sistema simula um painel de cobranças real, permitindo testar funci
 - Criar novas cobranças
 - Editar cobranças existentes
 - Deletar cobranças
-- Atualizar status de cobrança (PENDENTE / PAGO)
+- Atualizar status de cobrança (PENDENTE / PAGO / ATRASADA)
 - Filtrar por nome do cliente e status
 - Interface responsiva em React com SCSS
 - Organização do backend em camadas:
@@ -99,6 +99,6 @@ cd desafioImovelPay/backend
 <details>
   <summary>Visualizar imagens do Lista de Cobranças</summary>
   
-  ![Formulário de Cobranças](https://github.com/user-attachments/assets/0fef0c39-750c-4f9a-b9f5-34be3c1420db)
+  ![Formulário de Cobranças](https://github.com/user-attachments/assets/ae89c712-d8a1-45af-965e-85013d3e820e)
 
 </details>
