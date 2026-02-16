@@ -1,55 +1,101 @@
 import React, { useEffect, useState } from 'react';
 import './CobrancaList.scss';
-import { 
-  listarCobrancas, 
+import {
+  listarCobrancas,
   deletarCobranca,
-  atualizarStatus  
+  atualizarStatus
 } from '../../services/api';
 
 const CobrancaList = ({ onEditar }) => {
+  // 🔹 Estado principal que guarda as cobranças vindas do backend
   const [cobrancas, setCobrancas] = useState([]);
+
+  // 🔹 Estados dos filtros
   const [filtroNome, setFiltroNome] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('');
 
-  // Busca todas as cobranças do backend
+  // 🔹 Estado para controlar carregamento
+  const [loading, setLoading] = useState(true);
+
+  // 🔥 Busca todas as cobranças do backend (versão segura)
   const fetchCobrancas = async () => {
-    const data = await listarCobrancas();
-    setCobrancas(data);
+    try {
+      setLoading(true); // ativa loading
+
+      const data = await listarCobrancas();
+
+      // ✅ Garante que sempre seja um array
+      if (Array.isArray(data)) {
+        setCobrancas(data);
+      } else {
+        console.error('Resposta inesperada do backend:', data);
+        setCobrancas([]);
+      }
+
+    } catch (error) {
+      console.error('Erro ao buscar cobranças:', error);
+      setCobrancas([]);
+    } finally {
+      setLoading(false); // desativa loading
+    }
   };
 
+  // 🔹 Executa uma vez quando o componente carrega
   useEffect(() => {
     fetchCobrancas();
   }, []);
 
-  // Filtra pelo nome e status
-  const cobrancasFiltradas = cobrancas.filter(c => {
+  // 🔒 Proteção extra:
+  // Se por algum motivo cobrancas não for array,
+  // garantimos que listaSegura seja sempre array
+  const listaSegura = Array.isArray(cobrancas) ? cobrancas : [];
+
+  // 🔎 Filtra pelo nome e status
+  const cobrancasFiltradas = listaSegura.filter(c => {
+
+    // Proteção caso nome_cliente venha undefined
     const nomeMatch = c.nome_cliente
-      .toLowerCase()
+      ?.toLowerCase()
       .includes(filtroNome.toLowerCase());
 
-    const statusMatch = filtroStatus 
-      ? c.status === filtroStatus 
+    // Se tiver filtro de status, compara.
+    // Se não tiver, aceita todos.
+    const statusMatch = filtroStatus
+      ? c.status === filtroStatus
       : true;
 
     return nomeMatch && statusMatch;
   });
 
-  // Deleta uma cobrança
+  // 🗑 Deleta uma cobrança e atualiza a lista
   const handleDelete = async (id) => {
-    await deletarCobranca(id);
-    fetchCobrancas();
+    try {
+      await deletarCobranca(id);
+      fetchCobrancas(); // recarrega lista
+    } catch (error) {
+      console.error('Erro ao deletar:', error);
+    }
   };
 
-  // Atualiza status usando api.js
+  // 🔄 Atualiza status usando api.js (PENDENTE <-> PAGO)
   const handleStatusChange = async (id, status) => {
-    await atualizarStatus(id, status);
-    fetchCobrancas();
+    try {
+      await atualizarStatus(id, status);
+      fetchCobrancas(); // recarrega lista
+    } catch (error) {
+      console.error('Erro ao atualizar status:', error);
+    }
   };
+
+  // 🔄 Enquanto carrega dados
+  if (loading) {
+    return <p>Carregando cobranças...</p>;
+  }
 
   return (
     <div className="cobranca-list-container">
 
-      {/* Filtros */}
+      {/* 🔎 Filtros */}
       <div className="filtros">
         <input
           type="text"
@@ -70,15 +116,15 @@ const CobrancaList = ({ onEditar }) => {
         </select>
       </div>
 
-      {/* Tabela */}
+      {/* 📋 Tabela */}
       <table className="cobranca-list">
         <thead>
           <tr>
             <th>ID</th>
             <th>Cliente</th>
-            <th>Descrição</th> {/* 👈 NOVO */}
+            <th>Descrição</th>
             <th>Valor</th>
-            <th>Vencimento</th> {/* 👈 NOVO */}
+            <th>Vencimento</th>
             <th>Status</th>
             <th>Ações</th>
           </tr>
@@ -91,28 +137,26 @@ const CobrancaList = ({ onEditar }) => {
 
               <td>{c.nome_cliente}</td>
 
-              {/* Descrição */}
-              <td>{c.descricao}</td>
+              {/* Descrição (se não existir mostra "-") */}
+              <td>{c.descricao || '-'}</td>
 
-              {/* Valor formatado */}
+              {/* Valor formatado para padrão brasileiro */}
               <td>
                 R$ {Number(c.valor).toFixed(2)}
               </td>
 
               {/* Data formatada para padrão BR */}
               <td>
-                {c.data_vencimento 
-                  ? new Date(c.data_vencimento)
-                      .toLocaleDateString("pt-BR")
-                  : "-"
-                }
+                {c.data_vencimento
+                  ? new Date(c.data_vencimento).toLocaleDateString("pt-BR")
+                  : '-'}
               </td>
 
               <td>{c.status}</td>
 
               <td className="acoes">
 
-                {/* Botões de status */}
+                {/* 🔄 Botões de status */}
                 <div className="linha-status">
                   <button
                     className={`status-button status-pendente ${
@@ -133,7 +177,7 @@ const CobrancaList = ({ onEditar }) => {
                   </button>
                 </div>
 
-                {/* Editar / Deletar */}
+                {/* ✏️ Editar / 🗑 Deletar */}
                 <div className="linha-acoes">
                   <button
                     className="edit-btn"
