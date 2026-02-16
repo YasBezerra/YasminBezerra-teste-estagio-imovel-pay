@@ -2,46 +2,92 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db'); 
 
-// POST /cobrancas — cria uma nova cobrança
+// POST /cobrancas
 router.post('/', (req, res) => {
-    const { nome_cliente, valor } = req.body;
+    const { nome_cliente, descricao, valor, data_vencimento } = req.body;
 
-    if (!nome_cliente || !valor) {
-        return res.status(400).json({ error: 'nome_cliente e valor são obrigatórios' });
+    if (!nome_cliente || !valor || !data_vencimento) {
+        return res.status(400).json({ 
+            error: 'nome_cliente, valor e data_vencimento são obrigatórios' 
+        });
     }
 
-    const sql = 'INSERT INTO cobrancas (nome_cliente, valor) VALUES (?, ?)';
-    db.query(sql, [nome_cliente, valor], (err, result) => {
+    const sql = `
+        INSERT INTO cobrancas 
+        (nome_cliente, descricao, valor, data_vencimento, status) 
+        VALUES (?, ?, ?, ?, 'PENDENTE')
+    `;
+
+    db.query(sql, [nome_cliente, descricao, valor, data_vencimento], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        res.status(201).json({ id: result.insertId, nome_cliente, valor });
+
+        res.status(201).json({
+            id: result.insertId,
+            nome_cliente,
+            descricao,
+            valor,
+            status: 'PENDENTE',
+            data_vencimento
+        });
     });
 });
 
-// GET /cobrancas — lista todas as cobranças
+// GET /cobrancas
 router.get('/', (req, res) => {
-    const sql = 'SELECT * FROM cobrancas';
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
+
+    // Atualiza cobranças vencidas automaticamente
+    const updateSql = `
+        UPDATE cobrancas
+        SET status = 'ATRASADA'
+        WHERE status IN ('PENDENTE')
+        AND data_vencimento < CURDATE()
+    `;
+
+    db.query(updateSql, (updateErr) => {
+        if (updateErr) {
+            return res.status(500).json({ error: updateErr.message });
         }
-        res.json(results);
+
+        const selectSql = `
+            SELECT * 
+            FROM cobrancas
+            ORDER BY data_vencimento ASC
+        `;
+
+        db.query(selectSql, (err, results) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            res.json(results);
+        });
     });
 });
 
-// PUT /cobrancas/:id — atualiza uma cobrança
+
+// PUT /cobrancas/:id
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const { nome_cliente, valor } = req.body;
+    const { nome_cliente, descricao, valor, data_vencimento } = req.body;
 
-    if (!nome_cliente || !valor) {
-        return res.status(400).json({ error: 'nome_cliente e valor são obrigatórios' });
+    if (!nome_cliente || !valor || !data_vencimento) {
+        return res.status(400).json({ 
+            error: 'nome_cliente, valor e data_vencimento são obrigatórios' 
+        });
     }
 
-    const sql = 'UPDATE cobrancas SET nome_cliente = ?, valor = ? WHERE id = ?';
+    const sql = `
+        UPDATE cobrancas 
+        SET nome_cliente = ?, 
+            descricao = ?, 
+            valor = ?, 
+            data_vencimento = ?
+        WHERE id = ?
+    `;
 
-    db.query(sql, [nome_cliente, valor, id], (err, result) => {
+    db.query(sql, [nome_cliente, descricao, valor, data_vencimento, id], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
@@ -54,11 +100,13 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// DELETE /cobrancas/:id — deleta uma cobrança
+
+// DELETE /cobrancas/:id
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
 
     const sql = 'DELETE FROM cobrancas WHERE id = ?';
+
     db.query(sql, [id], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
@@ -72,16 +120,21 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-// PATCH /cobrancas/:id/status — atualiza o status da cobrança
+//  PATCH /cobrancas/:id/status
 router.patch('/:id/status', (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!status) {
-        return res.status(400).json({ error: 'O status é obrigatório' });
+    const statusValidos = ['PENDENTE', 'PAGO', 'ATRASADA'];
+
+    if (!status || !statusValidos.includes(status)) {
+        return res.status(400).json({ 
+            error: 'Status inválido. Use PENDENTE, PAGO ou ATRASADA.' 
+        });
     }
 
     const sql = 'UPDATE cobrancas SET status = ? WHERE id = ?';
+
     db.query(sql, [status, id], (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
@@ -91,7 +144,7 @@ router.patch('/:id/status', (req, res) => {
             return res.status(404).json({ message: 'Cobrança não encontrada' });
         }
 
-        res.json({ message: `Status da cobrança atualizado para "${status}"` });
+        res.json({ message: `Status atualizado para "${status}"` });
     });
 });
 
