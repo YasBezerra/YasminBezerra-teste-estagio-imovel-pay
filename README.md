@@ -1,137 +1,104 @@
-# 🚀 Teste Técnico – Estágio em Desenvolvimento
+# Lista de Cobranças
 
-Bem-vindo(a)!
+Esta aplicação é um sistema completo para gerenciamento de cobranças, desenvolvido como parte de um desafio técnico. Permite ao usuário criar, listar, editar e deletar cobranças, além de atualizar o status de cada cobrança (PENDENTE ou PAGO) de forma rápida e intuitiva.
 
-Este repositório contém o **teste técnico para a vaga de estágio em desenvolvimento**.  
-O objetivo deste desafio **não é avaliar nível sênior**, mas entender **como você pensa, organiza o código, aprende e resolve problemas**.
+O backend foi construído utilizando Node.js, Express e MySQL, organizado em camadas (routes → controller → service → banco de dados), garantindo manutenção fácil, escalabilidade e separação clara de responsabilidades.
 
-Leia tudo com atenção antes de começar 👇
+O frontend foi desenvolvido em React com SCSS, oferecendo uma interface responsiva e interativa, incluindo filtros por nome do cliente e status, botões de ação e atualização de status direto na tabela. A aplicação também utiliza variáveis de ambiente para proteger credenciais sensíveis, como a senha do banco de dados.
 
----
+Durante o desenvolvimento, o projeto proporcionou aprendizado prático sobre: configuração de rotas no Express, diferenças entre GET, PUT e PATCH, debug de variáveis de ambiente, organização em camadas, e boas práticas de segurança no versionamento de código.
 
-## 🏢 Contexto Geral
-
-Trabalhamos com sistemas reais voltados para **pagamentos, cobranças e operações financeiras**.  
-Neste desafio, você irá desenvolver uma aplicação **simples**, inspirada nesse contexto, sem necessidade de integrações externas ou regras complexas.
+No geral, o sistema simula um painel de cobranças real, permitindo testar funcionalidades comuns em aplicações corporativas de gestão financeira e demonstrando boas práticas de desenvolvimento frontend e backend.
 
 ---
 
-## ⏰ Prazo de Entrega
+## Funcionalidades
 
-- **Data limite:** **20/02/2026**
-- Pull Requests enviados após essa data **não serão considerados**
-
----
-
-## ⚠️ Regras Importantes
-
-- Este repositório é **público**
-- **Não é permitido** commitar diretamente na branch `master`
-- Crie **uma branch com o seu nome**  
-  Exemplo: `joao-silva`
-- Ao finalizar, abra **um Pull Request para a branch `master`**
-- Não há template, boilerplate ou código inicial
-- Toda a estrutura do projeto deve ser criada por você
+- Listar todas as cobranças do banco de dados
+- Criar novas cobranças
+- Editar cobranças existentes
+- Deletar cobranças
+- Atualizar status de cobrança (PENDENTE / PAGO)
+- Filtrar por nome do cliente e status
+- Interface responsiva em React com SCSS
+- Organização do backend em camadas:
+  - `routes` → define endpoints
+  - `controller` → recebe requisições e chama o service
+  - `service` → lógica de negócio e comunicação com o banco
+- Uso de variáveis de ambiente para manter senhas e dados sensíveis seguros
 
 ---
 
-## 🛠️ Stack (Sugestão)
+## Tecnologias
 
-A stack abaixo é **apenas uma sugestão**, baseada no que utilizamos no dia a dia.  
-Você pode adaptar conforme seu conhecimento, desde que mantenha uma separação clara entre backend e frontend.
-
-### Backend (sugestão)
-- PHP (preferencialmente seguindo padrões MVC, como CodeIgniter)
-**ou**
-- Node.js (Express ou similar)
-
-### Frontend (sugestão)
-- React.js
-
-### Banco de Dados (recomendação)
-- MySQL  
-
-📌 O uso de banco de dados **não é obrigatório**, mas o MySQL é recomendado caso você opte por persistência de dados.
-
-❌ **Não é necessário**
-- Autenticação
-- Deploy
-- Estilização avançada
+- Backend: Node.js, Express, MySQL, dotenv  
+- Frontend: React, SCSS  
+- Ferramentas auxiliares: Vite (frontend), npm  
 
 ---
 
-## 📌 Desafio Proposto
+## Problemas enfrentados e aprendizados
 
-### Mini Sistema de Cobranças (Simplificado)
+Durante o desenvolvimento, enfrentei diversos desafios que foram importantes para aprendizado:
 
-Você deverá criar um sistema simples para **gerenciar cobranças**, contendo backend e frontend.
+1. Rotas do Express
+   - Erros como `Cannot GET/PUT` apareceram por falta de `app.use('/cobrancas', routes)` ou configuração incorreta de endpoints.
+   - Aprendi a organizar rotas de forma clara e a debugar passo a passo.
 
----
+2. Conflito de porta
+   - `EADDRINUSE` apareceu quando a porta já estava em uso.
+   - Resolvido garantindo que o servidor fosse encerrado corretamente antes de rodar novamente.
 
-## ✅ Requisitos Funcionais (MVP)
+3. Diferença entre GET, PUT e PATCH
+   - Entendi que `PATCH` é ideal para atualizar parcialmente um registro (ex: status de cobrança), enquanto `PUT` substitui todo o registro.
 
-### 🔧 Backend
+4. Segurança das credenciais
+   - Inicialmente, a senha do MySQL estava no código.
+   - Aprendi a usar dotenv e `.env` para manter senhas fora do GitHub.
 
-Criar uma API que permita:
+5. Debug de variáveis de ambiente
+   - Erro `Access denied for user ''@'localhost'` mostrou que o Node não estava lendo as variáveis.
+   - Resolvido garantindo `.env` na raiz, sem espaços extras, e chamando `require('dotenv').config()` antes de usar as variáveis.
 
-1. Listar cobranças
-2. Criar uma nova cobrança
-3. Atualizar o status de uma cobrança
-
-#### Campos mínimos de uma cobrança:
-- Nome do cliente
-- Valor
-- Data de vencimento
-- Status (`PENDENTE` ou `PAGO`)
-
-📎 Observações:
-- Os dados podem ser armazenados:
-  - Em memória
-  - Em arquivo (JSON, por exemplo)
-  - Em banco de dados (opcional)
-- Validações básicas são esperadas (campos obrigatórios)
+6. Organização em camadas
+   - Aprendi a separar responsabilidades: routes → controller → service → banco, facilitando manutenção e escalabilidade.
 
 ---
 
-### 🎨 Frontend
+## Instalação
 
-Criar uma interface simples que permita:
+* Clonar o repositório e entrar na pasta do backend
+git clone https://github.com/seu-usuario/desafioImovelPay.git
+cd desafioImovelPay/backend
 
-1. Visualizar a lista de cobranças
-2. Criar uma nova cobrança
-3. Alterar o status de uma cobrança para `PAGO`
+* Instalar dependências do backend
 
-📎 Observações:
-- O layout pode ser simples
-- O foco é funcionalidade, organização e clareza
-- Utilize componentes e estado de forma básica
+  - npm install
+  - npm install express
+  - npm install mysql2
+  - npm install dotenv
 
----
+* Criar o arquivo .env na raiz do backend com suas credenciais do MySQL
+* Exemplo de conteúdo do .env:
+  - DB_HOST=localhost
+  - DB_USER=root
+  - DB_PASSWORD=suaSenhaAqui
+  - DB_NAME=nomeDoBanco
+  - DB_PORT=3306
+  - PORT=3000
 
-## 🧩 Requisitos Não Funcionais
+* Executar o backend
+  - node app.js
 
-- Código organizado e legível
-- Nomes claros para variáveis, funções e arquivos
-- Separação mínima de responsabilidades
-- README explicando como rodar o projeto
+* Configurar e executar o frontend
+  - cd ../frontend
+  - npm install
+  - npm install sass
+  - npm run dev
+ 
+<details>
+  <summary>Visualizar imagens do Lista de Cobranças</summary>
+  
+  ![Formulário de Cobranças](https://github.com/user-attachments/assets/0fef0c39-750c-4f9a-b9f5-34be3c1420db)
 
----
-
-## ⭐ Pontos Bônus (Não Obrigatórios)
-
-Os itens abaixo **não são obrigatórios e não são eliminatórios**,  
-mas serão considerados como **diferenciais positivos** na avaliação:
-
-- Testes unitários básicos (backend e/ou frontend)
-- Uso de MySQL para persistência de dados
-- Organização clara de camadas (ex: controller, service, repository)
-- Tratamento simples de erros (mensagens claras)
-- Estados de loading no frontend
-- Commits bem descritos
-- Comentários explicando decisões técnicas importantes
-- Pequenas melhorias além do MVP (ex: filtros ou ordenação)
-
-📌 A ausência desses itens **não prejudica** sua avaliação.
-
-
-
+</details>
