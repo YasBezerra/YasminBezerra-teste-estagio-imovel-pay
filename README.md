@@ -77,6 +77,33 @@ cd desafioImovelPay/backend
   - npm install express
   - npm install mysql2
   - npm install dotenv
+ 
+* Configuração do Banco de Dados
+
+## 🗄️ Banco de Dados
+
+Execute o script abaixo no MySQL:
+
+```sql
+-- Criar banco se não existir
+CREATE DATABASE IF NOT EXISTS desafio;
+USE desafio;
+
+DROP TABLE IF EXISTS cobrancas;
+
+CREATE TABLE cobrancas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_cliente VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    valor DECIMAL(10,2) NOT NULL,
+    status ENUM('PENDENTE', 'PAGO', 'ATRASADA') NOT NULL DEFAULT 'PENDENTE',
+    data_vencimento DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+
 
 * Criar o arquivo .env na raiz do backend com suas credenciais do MySQL
 * Exemplo de conteúdo do .env:
